@@ -55,6 +55,12 @@ build CMakeFiles/Sequence_Set.dir/src/main.cpp.obj: CXX_COMPILER__Sequence_Set_D
   OBJECT_DIR = CMakeFiles\Sequence_Set.dir
   OBJECT_FILE_DIR = CMakeFiles\Sequence_Set.dir\src
 
+build CMakeFiles/Sequence_Set.dir/src/Block.cpp.obj: CXX_COMPILER__Sequence_Set_Debug C$:/Users/marks/CLionProjects/Sequence_Set/src/Block.cpp || cmake_object_order_depends_target_Sequence_Set
+  DEP_FILE = CMakeFiles\Sequence_Set.dir\src\Block.cpp.obj.d
+  FLAGS = -g -std=gnu++14
+  OBJECT_DIR = CMakeFiles\Sequence_Set.dir
+  OBJECT_FILE_DIR = CMakeFiles\Sequence_Set.dir\src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Sequence_Set
@@ -63,7 +69,7 @@ build CMakeFiles/Sequence_Set.dir/src/main.cpp.obj: CXX_COMPILER__Sequence_Set_D
 #############################################
 # Link the executable Sequence_Set.exe
 
-build Sequence_Set.exe: CXX_EXECUTABLE_LINKER__Sequence_Set_Debug CMakeFiles/Sequence_Set.dir/src/main.cpp.obj
+build Sequence_Set.exe: CXX_EXECUTABLE_LINKER__Sequence_Set_Debug CMakeFiles/Sequence_Set.dir/src/main.cpp.obj CMakeFiles/Sequence_Set.dir/src/Block.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Sequence_Set.dir
