@@ -6,8 +6,8 @@
 #include <iostream>
 
 using namespace std;
-static int noofrecords;
-static int noofblocks;
+static int noofrecords=4; //(5-1)
+static int noofblocks=4;
 int Block::getKey() const {
     return key;
 }
@@ -88,7 +88,7 @@ int Block::GetKey(string cIndexFile, int iBlock, int iRecord) {
     if (iBlock == 1) {
         file.seekg(negative + iRecord * 2, ios::beg);
     } else {
-        int temp = 2 + (4 * 2); //size for 1 block // "4" is the number of records
+        int temp = 2 + (noofrecords * 2); //size for 1 block // "4" is the number of records and must be replaced!!!!!!!!!!!!!!!!!!!!!!!!
         file.seekg((2 + temp * (iBlock - 1) + (2 + 2 * (iRecord - 1)) + negative), ios::beg);
     }
     file >> s;
@@ -109,12 +109,12 @@ int Block::GetBlockIndex(string cIndexFile, int iToken) { //itoken = ikey
     int key = 0;
     int negative =0;
     int temp=0;
-    for(int i=1;i<4;i++){ //"4" must be replaced with number of blocks.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    for(int i=1;i<noofblocks;i++){ //the zero block is never visited
         negative = Block::NumberOfNegativeSign(cIndexFile, i);
         file.seekg(negative+i+2+temp,ios::beg);
         file>>s;
         key=s-'0';
-        temp+=1+4*2;
+        temp+=1+noofrecords*2;
         if (key>=iToken){
             return i;
         }
@@ -134,11 +134,11 @@ int Block::GetRecordIndex(string cIndexFile, int iToken) {
     if (blockIndex==1){
         temp=4;
     }else{
-        temp=2+4*2*(blockIndex-1)+(blockIndex*2);
+        temp=2+noofrecords*2*(blockIndex-1)+(blockIndex*2);
     }
 
     int flag=0;
-    for (int i = 1; i <= 8; i+=2) { //"8" must be replaced!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    for (int i = 1; i <= noofrecords*2; i+=2) {
         file.seekg(negative+temp+(i-1),ios::beg);
         file>>s;
         key=s-'0';
@@ -179,7 +179,7 @@ int Block::GetVal(string cIndexFile, int iBlock, int iRecord) {
     if (iBlock == 1) {
         file.seekg(negative + iRecord * 2, ios::beg);
     } else {
-        int temp = 2 + (4 * 2); //size for 1 block // "4" is the number of records
+        int temp = 2 + (noofrecords * 2); //size for 1 block
         file.seekg((2 + temp * (iBlock - 1) + (2 + 2 * (iRecord - 1)) + negative + 1), ios::beg);
     }
     file >> s;
@@ -208,12 +208,13 @@ int Block::NumberOfNegativeSign(string filename, int blocknumber) {
     if (blocknumber == 0) {
         byteOffset = 2;
     } else {
-        byteOffset = 3+ 2/*noofblocks*/ + (4 * 2) * blocknumber; // "4" is the number of records. //"2" must be replaced!!!!!!!!!!!!!!!
+        byteOffset = (noofrecords * 2) * blocknumber;
     }
     for (int i = 0; i < byteOffset; i++) {
         file >> x;
         if (x == '-') {
             number++;
+            byteOffset++;
             file.seekg(i + 1, ios::beg);
         } else {
             file.seekg(i + 1, ios::beg);
