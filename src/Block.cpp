@@ -214,7 +214,7 @@ int Block::NumberOfNegativeSign(string filename, int blocknumber) {
     if (blocknumber == 0) {
         byteOffset = 2;
     } else {
-        byteOffset = 3+ 2/*noofblocks*/ + (4 * 2) * blocknumber; // "4" is the number of records. //"2" must be replaced!!!!!
+        byteOffset = 3+ 2/*noofblocks*/ + (4 * 2) * blocknumber; // "4" is the number of records. //"2" must be replaced!!!!!!!!!!!!!!!
     }
     for (int i = 0; i < byteOffset; i++) {
         file >> x;
