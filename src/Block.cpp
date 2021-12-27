@@ -129,20 +129,14 @@ int Block::GetRecordIndex(string cIndexFile, int iToken) {
     int key = 0;
     int negative =0;
     int temp=0;
-    int blockIndex;
-    for(int i=1;i<4;i++){ //"4" must be replaced with number of blocks.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        negative = Block::NumberOfNegativeSign(cIndexFile, i);
-        file.seekg(negative+i+2+temp,ios::beg);
-        file>>s;
-        key=s-'0';
-        temp+=1+4*2; //"4" must be replaced!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        if (key>=iToken){
-            blockIndex= i;
-            break;
-        }
-    }
+    int blockIndex=Block::GetBlockIndex(cIndexFile,iToken);
     negative = Block::NumberOfNegativeSign(cIndexFile, blockIndex);
-    temp=temp-blockIndex;
+    if (blockIndex==1){
+        temp=4;
+    }else{
+        temp=2+4*2*(blockIndex-1)+(blockIndex*2);
+    }
+
     int flag=0;
     for (int i = 1; i <= 8; i+=2) { //"8" must be replaced!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         file.seekg(negative+temp+(i-1),ios::beg);
