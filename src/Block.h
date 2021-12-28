@@ -46,7 +46,7 @@ public:
 
     int FirstEmptyBlock(string cIndexFile); // return the index of the first empty block.
 
-    int NumberOfNegativeSign(string filename,int blocknumber);
+    int NumberOfNegativeSigns(string filename, int blocknumber);
 };
 
 

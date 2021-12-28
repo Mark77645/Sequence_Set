@@ -83,7 +83,7 @@ int Block::GetKey(string cIndexFile, int iBlock, int iRecord) {
     fstream file;
     char s;
     int key = 0;
-    int negative = Block::NumberOfNegativeSign(cIndexFile, iBlock);
+    int negative = Block::NumberOfNegativeSigns(cIndexFile, iBlock);
     file.open(cIndexFile, ios::in);
     if (iBlock == 1) {
         file.seekg(negative + iRecord * 2, ios::beg);
@@ -110,7 +110,7 @@ int Block::GetBlockIndex(string cIndexFile, int iToken) { //itoken = ikey
     int negative =0;
     int temp=0;
     for(int i=1;i<noofblocks;i++){ //the zero block is never visited
-        negative = Block::NumberOfNegativeSign(cIndexFile, i);
+        negative = Block::NumberOfNegativeSigns(cIndexFile, i);
         file.seekg(negative+i+2+temp,ios::beg);
         file>>s;
         key=s-'0';
@@ -130,7 +130,7 @@ int Block::GetRecordIndex(string cIndexFile, int iToken) {
     int negative =0;
     int temp=0;
     int blockIndex=Block::GetBlockIndex(cIndexFile,iToken);
-    negative = Block::NumberOfNegativeSign(cIndexFile, blockIndex);
+    negative = Block::NumberOfNegativeSigns(cIndexFile, blockIndex);
     if (blockIndex==1){
         temp=4;
     }else{
@@ -159,7 +159,7 @@ int Block::FirstEmptyBlock(string cIndexFile) {
     fstream file;
     file.open(cIndexFile, ios::in);
     char x;
-    int negative = Block::NumberOfNegativeSign(cIndexFile, 0);
+    int negative = Block::NumberOfNegativeSigns(cIndexFile, 0);
     if (negative==0){
         file.seekg(1, ios::beg);
     }else if (negative==1){
@@ -174,7 +174,7 @@ int Block::GetVal(string cIndexFile, int iBlock, int iRecord) {
     fstream file;
     char s;
     int val = 0;
-    int negative = Block::NumberOfNegativeSign(cIndexFile, iBlock);
+    int negative = Block::NumberOfNegativeSigns(cIndexFile, iBlock);
     file.open(cIndexFile, ios::in);
     if (iBlock == 1) {
         file.seekg(negative + iRecord * 2, ios::beg);
@@ -199,7 +199,7 @@ Block::Block() {
     this->values = nullptr;
 }
 
-int Block::NumberOfNegativeSign(string filename, int blocknumber) {
+int Block::NumberOfNegativeSigns(string filename, int blocknumber) {
     fstream file;
     file.open(filename, ios::in);
     char x;
